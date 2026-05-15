@@ -22,7 +22,69 @@
 
 # 
 
+# views.py
 
+# from django.shortcuts import render, redirect
+# from .models import Student, Course
+
+
+# def home(request):
+#     return render(request, 'home.html')
+
+
+# def studentlist(request):
+#     students = Student.objects.all()
+#     return render(request, 'studentlist.html', {'students': students})
+
+
+# def courselist(request):
+#     courses = Course.objects.all()
+#     return render(request, 'courselist.html', {'courses': courses})
+
+
+# def register(request):
+
+#     if request.method == 'POST':
+
+#         student_id = request.POST['student']
+#         course_id = request.POST['course']
+
+#         student = Student.objects.get(id=student_id)
+#         course = Course.objects.get(id=course_id)
+
+#         student.courses.add(course)
+
+#         return redirect('enrolled')
+
+#     students = Student.objects.all()
+#     courses = Course.objects.all()
+
+#     return render(request, 'register.html', {
+#         'students': students,
+#         'courses': courses
+#     })
+
+
+# def enrolled(request):
+
+#     courses = Course.objects.all()
+
+#     selected_course = None
+#     students = None
+
+#     if request.method == 'POST':
+
+#         course_id = request.POST['course']
+
+#         selected_course = Course.objects.get(id=course_id)
+
+#         students = selected_course.student_set.all()
+
+#     return render(request, 'enrolledlist.html', {
+#         'courses': courses,
+#         'students': students,
+#         'selected_course': selected_course
+#     })
 
 # url.py app
 # from django.urls import path
