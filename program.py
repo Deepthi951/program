@@ -346,3 +346,118 @@
 # {% endif %}
 
 # {% endblock %}
+
+
+# 6) models.py
+# from django.db import models
+
+# class Project(models.Model):
+
+#     topic = models.CharField(max_length=100)
+
+#     languages_used = models.TextField()
+
+#     duration = models.PositiveIntegerField()
+
+#     def __str__(self):
+
+#         return self.topic
+
+
+
+# forms.py
+# from django import forms
+
+# from .models import Project
+
+
+# class ProjectForm(forms.ModelForm):
+
+#     class Meta:
+
+#         model = Project
+
+#         fields = ['topic', 'languages_used', 'duration']
+
+
+# views.py
+# from django.shortcuts import render
+
+# from .forms import ProjectForm
+
+
+# def project_view(request):
+
+#     if request.method == 'POST':
+
+#         form = ProjectForm(request.POST)
+
+#         if form.is_valid():
+
+#             form.save()
+
+#             return render(request, 'project_success.html')
+
+#     else:
+
+#         form = ProjectForm()
+
+#     return render(request, 'project_form.html', {'form': form})
+
+
+# urls.py
+# from django.urls import path
+
+# from . import views
+
+
+# urlpatterns = [
+
+#     path('project/', views.project_view, name='project'),
+
+# ]
+
+
+# project_form.html
+# <!DOCTYPE html>
+
+# <html>
+
+# <head>
+#     <title>Project Form</title>
+# </head>
+
+# <body>
+
+# <h1>Project Submission Form</h1>
+
+# <form method="POST">
+
+#     {% csrf_token %}
+
+#     {{ form.as_p }}
+
+#     <button type="submit">Submit</button>
+
+# </form>
+
+# </body>
+# </html>
+
+# project_success.html
+# <!DOCTYPE html>
+
+# <html>
+
+# <head>
+#     <title>Success</title>
+# </head>
+
+# <body>
+
+# <h1>Project Submitted Successfully</h1>
+
+# <a href="/project/">Go Back</a>
+
+# </body>
+# </html>
