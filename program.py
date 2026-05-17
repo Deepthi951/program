@@ -603,3 +603,172 @@
 #     </footer>
 # </body>
 </html>
+
+
+# 7) pdf and csv
+# models.py
+# from django.db import models
+
+# class course(models.Model):
+
+#     code = models.CharField(max_length=10)
+
+#     cname = models.CharField(max_length=30)
+
+#     credits = models.IntegerField()
+
+#     def __str__(self):
+
+#         return self.code
+
+
+# admin.py
+# from django.contrib import admin
+# from app.models import course
+
+# admin.site.register(course)
+
+
+# views.py
+# from django.shortcuts import render
+# from django.http import HttpResponse
+# from app.models import course
+
+# import csv
+
+# # Course list page
+# def courselist(request):
+
+#     courses = course.objects.all()
+
+#     return render(request,'courselist.html',{'courses':courses})
+
+
+# # CSV generation
+# def generateCSV(request):
+
+#     courses = course.objects.all()
+
+#     response = HttpResponse(content_type='text/csv')
+
+#     response['Content-Disposition'] = 'attachment; filename=courses.csv'
+
+#     writer = csv.writer(response)
+
+#     writer.writerow(['Code','Course Name','Credits'])
+
+#     for c in courses:
+
+#         writer.writerow([c.code,c.cname,c.credits])
+
+#     return response
+
+
+# # PDF generation
+# from reportlab.platypus import SimpleDocTemplate, Table
+# from reportlab.lib.pagesizes import A4
+
+# def generatePDF(request):
+
+#     courses = course.objects.all()
+
+#     response = HttpResponse(content_type='application/pdf')
+
+#     response['Content-Disposition'] = 'attachment; filename=courses.pdf'
+
+#     pdf = SimpleDocTemplate(response,pagesize=A4)
+
+#     data = [['Code','Course Name','Credits']]
+
+#     for c in courses:
+
+#         data.append([c.code,c.cname,c.credits])
+
+#     table = Table(data)
+
+#     pdf.build([table])
+
+#     return response
+
+
+# urls.py
+# from django.urls import path
+# from . import views
+
+# urlpatterns = [
+
+#     path('courselist/',views.courselist,name='courselist'),
+
+#     path('generateCSV/',views.generateCSV,name='generateCSV'),
+
+#     path('generatePDF/',views.generatePDF,name='generatePDF'),
+
+# ]
+
+
+# basic.html
+# <!DOCTYPE html>
+# <html>
+# <head>
+
+#     <title>
+#         {% block title %}
+#         {% endblock %}
+#     </title>
+
+# </head>
+
+# <body>
+
+# <h1>Student Course Registration Portal</h1>
+
+# <a href="{% url 'courselist' %}">Course List</a>
+
+# <a href="{% url 'generateCSV' %}">Download CSV</a>
+
+# <a href="{% url 'generatePDF' %}">Download PDF</a>
+
+# <hr>
+
+# {% block content %}
+# {% endblock %}
+
+# </body>
+# </html>
+
+
+#  courselist.html
+#  {% extends 'basic.html' %}
+
+# {% block title %}
+# Course List
+# {% endblock %}
+
+# {% block content %}
+
+# <table border="1">
+
+# <tr>
+#     <th>Code</th>
+#     <th>Course Name</th>
+#     <th>Credits</th>
+# </tr>
+
+# {% for c in courses %}
+
+# <tr>
+
+#     <td>{{c.code}}</td>
+
+#     <td>{{c.cname}}</td>
+
+#     <td>{{c.credits}}</td>
+
+# </tr>
+
+# {% endfor %}
+
+# </table>
+
+# {% endblock %}
+ 
