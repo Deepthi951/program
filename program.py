@@ -461,3 +461,145 @@
 
 # </body>
 # </html>
+
+# 7) views.py
+# from django.shortcuts import render,redirect
+# from app.models import course,student
+# from django.views import generic
+# def home(request):
+#     return render(request,'home.html')
+# def studentlist(request):
+#     students=student.objects.all()
+#     return render(request,'studentlist.html',{'student':students})
+# def courselist(request):
+#     courses=course.objects.all()
+#     return render(request,'courselist.html',{'course':courses})
+# def register(request):
+#     if request.method=='POST':
+#         sid=request.POST.get('student')
+#         cid=request.POST.get('course')
+#         students=student.objects.get(id=sid)
+#         courses=course.objects.get(id=cid)
+#         students.courses.add(courses)
+#         return redirect('enrolled')
+#     students=student.objects.all()
+#     courses=course.objects.all()
+#     return render(request,'register.html',{'student':students,'course':courses})
+# def enroll(request):
+#     courses=course.objects.all()
+#     selected_course=None
+#     student=None
+#     if request.method=='POST':
+#         cid= request.POST.get('course')
+#         selected_course=course.objects.get(id=cid)
+#         student=selected_course.student_set.all()
+#     return render(request,'enrolled.html',{'course':courses,'selected_course':selected_course,'student':student})
+# class studentlistview(generic.ListView):
+#     model=student
+#     template_name='genericlistview.html'
+# class studentdetailview(generic.DetailView):
+#     model=student
+#     template_name='genericdetailview.html'
+
+# Create your views here.
+
+
+# urls.py
+# from django.contrib import admin
+# from django.urls import path
+# from app import views
+# from .views import studentlistview,studentdetailview
+
+# urlpatterns = [
+#     path('admin/', admin.site.urls),
+#     path('',views.home,name='home'),
+#     path('studentslist',views.studentlist,name='studentlist'),
+#     path('courselist',views.courselist,name='courselist'),
+#     path('register',views.register,name='register'),
+#     path('enrolled',views.enroll,name='enrolled'),
+#     path('genericlistview',studentlistview.as_view(),name='listview'),
+#     path('genericdetailview/<int:pk>',studentdetailview.as_view(),name='detailview')
+# ]
+
+
+# list.html
+# {% extends 'basic.html' %}
+# {% block title %}
+# home page
+# {% endblock %}
+# {% block content %}
+# {% if object_list %}
+# <table border="1">
+#     <tr>
+#     <th>USN</th>
+#     <th>Student Name</th>
+#     <th>Courses Enrolled</th>
+# </tr>
+# {% for student in object_list %}
+
+# <tr>
+
+#     <td>{{student.usn}}</td>
+
+#     <td>{{student.Sname}}</td>
+
+#     <td>
+
+#         {% for c in student.courses.all %}
+
+#             {{c.Cname}} <br>
+
+#         {% endfor %}
+
+#     </td>
+#     </tr>
+#     {% endfor %}
+# </table>
+# {% endif %}
+# {% endblock %}
+
+
+# detail.html
+# {% extends 'basic.html' %}
+# {% block title %}
+# detailview page
+# {% endblock %}
+# {% block content %}
+# <h1>Student Name: {{object.Sname}}</h1>
+
+# <h1>Student USN: {{object.usn}}</h1>
+
+# <h1>Student Semester: {{object.semester}}</h1>
+
+# {% endblock %}
+
+
+# basic.html
+# <!DOCTYPE html>
+# <html lang="en">
+# <head>
+#     <meta charset="UTF-8">
+#     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+#     <title>Document</title>
+# </head>
+# <body>
+#     <header>
+#         <nav>
+#             <a href="{% url 'home' %}">home</a>
+#             <a href="{% url 'studentlist' %}">studentlist</a>
+#             <a href="{% url 'courselist' %}">ccourselist</a>
+#             <a href="{% url 'register' %}">register</a>
+#             <a href="{% url 'enrolled' %}">enrolled</a>
+#             <a href="{% url 'listview' %}">listview</a>
+#             <a href="{% url 'detailview' 1 %}">detailview</a>
+#         </nav>
+#     </header>
+#     <main>
+#         {% block content %}
+#         {% endblock %}
+#     </main>
+#     <footer>
+#         &copy; Developed by deepthi
+#     </footer>
+# </body>
+</html>
