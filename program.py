@@ -772,3 +772,136 @@
 
 # {% endblock %}
  
+
+
+
+# 8) login logout
+# view.py
+# from django.shortcuts import render, redirect
+
+# from app.forms import signupform
+
+# from django.contrib.auth.views import LoginView, LogoutView
+
+# from django.urls import reverse_lazy
+
+# from django.contrib.auth.decorators import login_required
+
+
+# # Signup View
+# def signup(request):
+
+#     if request.method == 'POST':
+
+#         form = signupform(request.POST)
+
+#         if form.is_valid():
+
+#             form.save()
+
+#             return redirect('signin')
+
+#     else:
+
+#         form = signupform()
+
+#     return render(request, 'signup.html', {'form': form})
+
+
+# # Login View
+# class signin(LoginView):
+
+#     template_name = 'signin.html'
+
+#     def get_success_url(self):
+
+#         return reverse_lazy('dashboard')
+
+
+# # Logout View
+# class signout(LogoutView):
+
+#     next_page = reverse_lazy('signin')
+
+
+# # Dashboard View
+# @login_required
+# def dashboard(request):
+
+#     return render(request, 'dashboard.html')
+
+
+
+# urls.py
+# from django.urls import path
+
+# from .views import signup, signin, signout, dashboard
+
+
+# urlpatterns = [
+
+#     path('signup/', signup, name='signup'),
+
+#     path('signin/', signin.as_view(), name='signin'),
+
+#     path('signout/', signout.as_view(), name='signout'),
+
+#     path('dashboard/', dashboard, name='dashboard'),
+
+# ]
+
+
+
+
+# signup.html
+# <h1>Signup Page</h1>
+
+# <form method="post">
+
+#     {% csrf_token %}
+
+#     {{ form.as_p }}
+
+#     <button type="submit">Signup</button>
+
+# </form>
+
+# <a href="{% url 'signin' %}">
+#     Already have account? Login
+# </a>
+
+
+
+# signin.html
+# <h1>Login Page</h1>
+
+# <form method="post">
+
+#     {% csrf_token %}
+
+#     {{ form.as_p }}
+
+#     <button type="submit">Login</button>
+
+# </form>
+
+# <a href="{% url 'signup' %}">
+#     Create Account
+# </a>
+
+
+
+#  dashboard.html
+#        <h1>Dashboard</h1>
+
+# <p>Welcome {{ user.username }}</p>
+
+# <form method="post" action="{% url 'signout' %}">
+
+#     {% csrf_token %}
+
+#     <button type="submit">Logout</button>
+
+# </form>
+
+
