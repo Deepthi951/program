@@ -904,4 +904,160 @@
 
 # </form>
 
+# program 9 generic views
 
+# views.py
+# # views.py
+
+# from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+# from django.urls import reverse_lazy
+# from .models import Publisher
+
+
+# # -----------------------------
+# # LIST VIEW
+# # -----------------------------
+# class PublisherListView(ListView):
+#     model = Publisher
+#     template_name = 'publisher_list_page.html'
+#     context_object_name = 'publishers'
+
+
+# # -----------------------------
+# # DETAIL VIEW
+# # -----------------------------
+# class PublisherDetailView(DetailView):
+#     model = Publisher
+#     template_name = 'publisher_detail_page.html'
+#     context_object_name = 'publisher'
+
+
+# # -----------------------------
+# # CREATE VIEW
+# # -----------------------------
+# class PublisherCreateView(CreateView):
+#     model = Publisher
+#     fields = ['name', 'address', 'city', 'state_province', 'country', 'website']
+#     template_name = 'publisher_create_page.html'
+#     success_url = reverse_lazy('publisher_list')
+
+
+# # -----------------------------
+# # UPDATE VIEW
+# # -----------------------------
+# class PublisherUpdateView(UpdateView):
+#     model = Publisher
+#     fields = ['name', 'address', 'city', 'state_province', 'country', 'website']
+#     template_name = 'publisher_update_page.html'
+#     success_url = reverse_lazy('publisher_list')
+
+
+# # -----------------------------
+# # DELETE VIEW
+# # -----------------------------
+# class PublisherDeleteView(DeleteView):
+#     model = Publisher
+#     template_name = 'publisher_delete_page.html'
+#     success_url = reverse_lazy('publisher_list')
+
+# models.py
+# # models.py
+
+# from django.db import models
+
+
+# class Publisher(models.Model):
+#     name = models.CharField(max_length=100)
+#     address = models.CharField(max_length=200)
+#     city = models.CharField(max_length=100)
+#     state_province = models.CharField(max_length=100)
+#     country = models.CharField(max_length=100)
+#     website = models.URLField()
+
+#     def __str__(self):
+#         return self.name
+
+
+# # urls.py
+
+# from django.urls import path
+# from .views import *
+
+# urlpatterns = [
+
+#     path('', PublisherListView.as_view(), name='publisher_list'),
+
+#     path('publisher/<int:pk>/',
+#          PublisherDetailView.as_view(),
+#          name='publisher_detail'),
+
+#     path('create/',
+#          PublisherCreateView.as_view(),
+#          name='publisher_create'),
+
+#     path('update/<int:pk>/',
+#          PublisherUpdateView.as_view(),
+#          name='publisher_update'),
+
+#     path('delete/<int:pk>/',
+#          PublisherDeleteView.as_view(),
+#          name='publisher_delete'),
+# ]
+
+
+
+# <h1>Publisher List</h1>
+
+# <ul>
+#     {% for publisher in publishers %}
+#         <li>
+#             <a href="{% url 'publisher_detail' publisher.pk %}">
+#                 {{ publisher.name }}
+#             </a>
+#         </li>
+#     {% endfor %}
+# </ul>
+
+# <a href="{% url 'publisher_create' %}">Add Publisher</a>
+
+
+
+
+# <h1>Publisher Details</h1>
+
+# <p>Name: {{ publisher.name }}</p>
+# <p>Address: {{ publisher.address }}</p>
+# <p>City: {{ publisher.city }}</p>
+# <p>Country: {{ publisher.country }}</p>
+# <p>Website: {{ publisher.website }}</p>
+
+# <a href="{% url 'publisher_update' publisher.pk %}">Edit</a>
+
+# <a href="{% url 'publisher_delete' publisher.pk %}">Delete</a>
+
+# <a href="{% url 'publisher_list' %}">Back</a>
+
+
+
+# <h1>Create Publisher</h1>
+
+# <form method="post">
+#     {% csrf_token %}
+#     {{ form.as_p }}
+
+#     <button type="submit">Save</button>
+# </form>
+
+
+
+# <h1>Delete Publisher</h1>
+
+# <p>Are you sure you want to delete "{{ object.name }}" ?</p>
+
+# <form method="post">
+#     {% csrf_token %}
+
+#     <button type="submit">Confirm Delete</button>
+# </form>
+
+# <a href="{% url 'publisher_list' %}">Cancel</a>
